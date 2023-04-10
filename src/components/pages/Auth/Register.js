@@ -1,13 +1,17 @@
-import { useState } from "react"
-
-import Input from "../../form/Input"
-import styles from "../../form/Form.module.css"
+import { useContext, useState } from "react"
 import { Link } from "react-router-dom"
 
+import Input from "../../form/Input"
+
+import styles from "../../form/Form.module.css"
+
+//context
+import { Context } from "../../../context/UserContext"
 
 function Register(){
     
     const [user, setUser] = useState({})
+    const {register} = useContext(Context)
 
     function handleChange(event){
         setUser({ ...user , [event.target.name]:event.target.value})
@@ -18,6 +22,7 @@ function Register(){
         event.preventDefault()//pagina nao recarregar ao clicar no submit
 
         //enviar para o banco
+        register(user)
     }
 
 
