@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './components/pages/Auth/Login'
 import Register from './components/pages/Auth/Register'
 import Home from './components/pages/Home'
+import Message from './components/layout/Message';
 
 //components
 import Navbar from './components/layout/Navbar';
@@ -22,6 +23,7 @@ function App() {
     <UserProvider>
       
       <Navbar/>
+      <Message/>
       <Container>
         <Routes>
           <Route path="/" element={<Home />} />
