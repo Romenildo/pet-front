@@ -65,7 +65,7 @@ function Register(){
                 <Input
                  text="Confirmação de senha"
                  type="password"
-                 name="cofnirmPassword"
+                 name="confirmPassword"
                  placeholder="Confirme a sua senha"
                  handleOnChance={handleChange}
                 />
