@@ -4,14 +4,14 @@ import api from "../utils/api";
 import useFlashMessage from "./useFlashMessage"
 
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 
 
 export default function useAuth() {
 
     const [authenticated, setAuthenticated] = useState(false)
     const {setFlashMessage} = useFlashMessage()
-    const history = useHistory()
+    const navigate = useNavigate()
 
 
     //verificar se o usuario ta com o token
@@ -46,7 +46,7 @@ export default function useAuth() {
 
         setAuthenticated(true)
         localStorage.setItem("token", JSON.stringify(data.token))
-        history.push('/')
+        navigate('/')
     }
 
     return { authenticated, register }
