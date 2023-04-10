@@ -5,12 +5,14 @@ import styles from "./Profile.module.css"
 import formStyles from "../../form/Form.module.css"
 
 import Input from "../../form/Input"
+import useFlashMessage from "../../../hooks/useFlashMessage"
 
 
 function Profile(){
 
     const [user, setUser] = useState({})
     const [token] = useState(localStorage.getItem('token') || '')
+    const { setFlashMessage } = useFlashMessage()
 
 
     //puxar os dados do usuario para editar
@@ -26,9 +28,40 @@ function Profile(){
     }, [token])
 
     function onFileChange(event){
+        setUser({ ...user , [event.target.name]:event.target.files[0]})
 
     }
     function handleChange(event){
+        setUser({ ...user , [event.target.name]:event.target.value})
+    }
+
+    async function handleSubmit(event){
+        event.preventDefault()//pagina nao recarregar ao clicar no submit
+        
+        let msgType = 'sucess'       
+        
+        const formData = new FormData()
+
+        const userFormData = await Object.keys(user).forEach((key) =>
+             formData.append(key, user[key]),
+        )
+
+        formData.append('user', userFormData)
+
+        const data = await api.patch('/users/edit',formData, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then( (res)=>{
+            return res.data.message
+        }).catch((err)=>{
+            msgType = 'error'
+            return err.response.data.message
+        })
+
+        setFlashMessage(data, msgType)
+
 
     }
     return(
@@ -39,28 +72,28 @@ function Profile(){
                 <p>imagem</p>
             </div>
 
-            <form className={formStyles.form_container}>
+            <form onSubmit={handleSubmit} className={formStyles.form_container}>
                 <Input
                  text="Imagem"
                  type="file"
                  name="image"
-                 handleOnChange={onFileChange}
+                 handleOnChance={onFileChange}
                 />
 
                 <Input
                  text="E-mail"
                  type="email"
                  name="email"
-                 handleOnChange={handleChange}
                  placeholder="Digite seu email"
+                 handleOnChance={handleChange}
                  value = {user.email || ''}
                 />
                 <Input
                  text="Nome"
                  type="text"
                  name="name"
-                 handleOnChange={handleChange}
                  placeholder="Digite seu nome"
+                 handleOnChance={handleChange}
                  value = {user.name || ''}
                 />
 
@@ -68,23 +101,24 @@ function Profile(){
                  text="Telefone"
                  type="text"
                  name="phone"
-                 handleOnChange={handleChange}
                  placeholder="Digite seu telefone"
+                 handleOnChance={handleChange}
                  value = {user.phone || ''}
                 />
                 <Input
                  text="Senha"
                  type="password"
                  name="password"
-                 handleOnChange={handleChange}
                  placeholder="Digite sua senha"
+                 handleOnChance={handleChange}
                 />
                 <Input
                  text="Confirmação de senha "
                  type="password"
                  name="confirmPassword"
-                 handleOnChange={handleChange}
                  placeholder="Confirme sua senha"
+                 handleOnChance={handleChange}
+
                 />
 
                 <input type="submit" value="Editar"></input>
