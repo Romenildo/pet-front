@@ -1,17 +1,30 @@
+import { useState } from "react"
 
 import Input from "../../form/Input"
 import styles from "../../form/Form.module.css"
 import { Link } from "react-router-dom"
 
-function handleChange(e){
 
-}
 function Register(){
+    
+    const [user, setUser] = useState({})
+
+    function handleChange(event){
+        setUser({ ...user , [event.target.name]:event.target.value})
+                            //      nome       :     jose
+    }
+
+    function handleSubmit(event){
+        event.preventDefault()//pagina nao recarregar ao clicar no submit
+
+        //enviar para o banco
+    }
+
 
     return (
         <section className={styles.form_container}>
             <h1>Register</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Input
                  text="Nome"
                  type="text"
