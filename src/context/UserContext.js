@@ -6,11 +6,11 @@ const Context = createContext()
 
 function UserProvider({children}){
 
-    const {authenticated, register} = useAuth()
+    const {authenticated, register, logout} = useAuth()
 
     return (
         //quando eu tiver acesso ao contexto eu posso acessar os componentes de dentro
-        <Context.Provider value={{authenticated, register}}>
+        <Context.Provider value={{authenticated, register, logout}}>
             {children}
         </Context.Provider>
     )

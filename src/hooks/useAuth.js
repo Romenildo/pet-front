@@ -44,10 +44,22 @@ export default function useAuth() {
 
     async function authUser(data){
 
-        setAuthenticated(true)
+        setAuthenticated(true)  
         localStorage.setItem("token", JSON.stringify(data.token))
         navigate('/')
     }
 
-    return { authenticated, register }
+    function logout(){
+        const msgText = 'Logout realizado com sucesso'
+        const msgType = 'sucess'
+
+        setAuthenticated(false)
+        localStorage.removeItem('token')
+        api.defaults.Authorization = undefined
+        navigate('/')
+
+        setFlashMessage(msgText, msgType)
+    }
+
+    return { authenticated, register, logout }
 }
