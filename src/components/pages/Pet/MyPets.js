@@ -26,6 +26,26 @@ function MyPets(){
         })
     }, [token])
 
+    async function removePet(id){
+        let msgType = 'sucess'
+
+        const data = await api.delete(`/pets/${id}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        }).then( (res)=>{
+            //atualizando a tela logo apos remover
+            const updatedPets = pets.filter((pet)=> pet._id !== id)
+            setPets(updatedPets)
+            return res.data.message
+        }).catch((err)=>{
+            msgType = 'error'
+            return err.response.data.message
+        })
+
+        setFlashMessage(data, msgType)
+    }
+
     return (
         <section >
             <div className={styles.petlist_header}>
@@ -48,7 +68,10 @@ function MyPets(){
                                     <>
                                     {pet.adopter && <button className={styles.conclude_btn}> Concluir adoção</button>}
                                     <Link to={`/pet/edit/${pet._id}`}>Editar</Link>
-                                    <button>Excluir</button>
+                                    {/*É necessario a função anonima para ele nao chamar a funcao ao renderizar o componente 
+                                        e sim quando clicar no botão
+                                    */}
+                                    <button onClick={()=>{removePet(pet._id)}}>Excluir</button>
                                     </>
                                 ):(
                                     <p>Pet já adotado</p>
