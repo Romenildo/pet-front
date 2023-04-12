@@ -12,18 +12,39 @@ function PetForm({handleSubmit, petData, btnText}){
     //melhor no back
     const colors = ['Branco', 'Preto', 'Cinza', 'Caramelo', 'Mesclado']
 
-    function onFileChange(){
+    function onFileChange(event){
+        setPreview(Array.from(event.target.files))
+        setPet({...pet, images: [...event.target.files]})
 
     }
-    function handleChange(){
+    function handleChange(event){
+        setPet({ ...pet , [event.target.name]:event.target.value})
 
     }
-    function handleColor(){
+    function handleColor(event){
+        setPet({...pet, color: [event.target.options[event.target.selectedIndex].text]})
 
     }
 
+    function submit(event){
+        event.preventDefault()
+        console.log(pet)
+    }
     return (
-        <form className={formStyles.form_container}>
+        <form onSubmit={submit} className={formStyles.form_container}>
+            <div className={formStyles.preview_pet_images}>
+                {
+                    preview.length > 0 
+                    //imagens do preview
+                    ? preview.map((image, index)=>(
+                        <img src={URL.createObjectURL(image)} alt={pet.name} key={`${pet.name}+ ${pet.index}`}></img>    
+                    )):
+                    //imagens do pet cadastrado
+                    pet.images && pet.images.map((image, index)=>(
+                        <img src={`${process.env.REACT_APP_API}/images/pets/${image}`} alt={pet.name} key={`${pet.name}+ ${pet.index}`}></img>
+                    ))
+                }
+            </div>
 
             <Input
              text="Imagens do Pet"
