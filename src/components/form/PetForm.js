@@ -41,7 +41,7 @@ function PetForm({handleSubmit, petData, btnText}){
                     )):
                     //imagens do pet cadastrado
                     pet.images && pet.images.map((image, index)=>(
-                        <img src={`${process.env.REACT_APP_API}/src/imgs/pets/${image}`} alt={pet.name} key={`${pet.name}+ ${pet.index}`}></img>
+                        <img src={`${process.env.REACT_APP_API}/imgs/pets/${image}`} alt={pet.name} key={`${pet.name}+ ${pet.index}`}></img>
                     ))
                 }
             </div>
