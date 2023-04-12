@@ -29,6 +29,9 @@ function Navbar(){
                 ( 
                     <>
                         <li>
+                            <Link to="/pet/mypets">Meus Pets</Link>
+                        </li>
+                        <li>
                             <Link to="/user/profile">Perfil</Link>
                         </li>
                         <li onClick={logout}> Sair</li>
