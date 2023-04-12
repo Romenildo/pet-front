@@ -26,7 +26,7 @@ function Home(){
             <div className={styles.pet_container}>
                 {pets.length > 0 && (
                     pets.map((pet)=>(
-                        <div className={styles.pet_card}>
+                        <div className={styles.pet_card} key={pet._id}>
                             {/*MOstrando as imagens dos pet como um background */}
                             <div className={styles.pet_card_image} style={{backgroundImage:`url(${process.env.REACT_APP_API}/imgs/pets/${pet.images[0]})` }}></div>
                             <h3>{pet.name}</h3>
