@@ -76,7 +76,7 @@ function Profile(){
                     (user.image || preview) && (
                         <>
                             <RoundedImage src={preview ? URL.createObjectURL(preview): 
-                                                `${process.env.REACT_APP_API}/images/users/${user.image}` }
+                                                `${process.env.REACT_APP_API}/imgs/users/${user.image}` }
                                  alt={user.name}
                             ></RoundedImage>
 
