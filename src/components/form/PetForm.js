@@ -28,7 +28,7 @@ function PetForm({handleSubmit, petData, btnText}){
 
     function submit(event){
         event.preventDefault()
-        console.log(pet)
+        handleSubmit(pet)
     }
     return (
         <form onSubmit={submit} className={formStyles.form_container}>
