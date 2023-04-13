@@ -46,6 +46,23 @@ function MyPets(){
         setFlashMessage(data, msgType)
     }
 
+    async function concludeAdoption(id){
+
+        let msgType = 'sucess'
+        const data = await api.patch(`/pets/conclude/${id}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        }).then( (res)=>{
+            return res.data.message
+        }).catch((err)=>{
+            msgType = 'error'
+            return err.response.data.message
+        })
+
+        setFlashMessage(data, msgType)
+    }
+
     return (
         <section >
             <div className={styles.petlist_header}>
@@ -66,7 +83,7 @@ function MyPets(){
                             <div className={styles.actions}>
                                 {pet.available ? (
                                     <>
-                                    {pet.adopter && <button className={styles.conclude_btn}> Concluir adoção</button>}
+                                    {pet.adopter && <button className={styles.conclude_btn} onClick={()=>{concludeAdoption(pet._id)}}> Concluir adoção</button>}
                                     <Link to={`/pet/edit/${pet._id}`}>Editar</Link>
                                     {/*É necessario a função anonima para ele nao chamar a funcao ao renderizar o componente 
                                         e sim quando clicar no botão
