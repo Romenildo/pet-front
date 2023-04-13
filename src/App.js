@@ -21,6 +21,7 @@ import Message from './components/layout/Message';
 
 //context
 import { UserProvider } from './context/UserContext';
+import MyAdoptions from './components/pages/Pet/MyAdoptions';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/pet/mypets" element={<MyPets/>} />
           <Route path="/pet/add" element={<AddPet/>} />
           <Route path="/pet/edit/:id" element={<EditPet/>} />
+          <Route path="/pet/myadoptions" element={<MyAdoptions/>} />
           <Route path="/pet/:id" element={<PetDetails/>} />
           
         </Routes>
